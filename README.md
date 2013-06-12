@@ -17,6 +17,8 @@ To use:
 
 6) svcadm enable minecraft
 
+7) Use mc-attach when you need console access ('Ctrl-b' then 'd' to exit console).
+
 Enjoy!
 
 
@@ -28,7 +30,7 @@ TODO:
 
 1. Put all the variables into svcprops and reference those from the mc-console and mc-service scripts.
 2. Write an update script.
-3. Write and installer script.
+3. Write an installer script.
 
 Check my blog post on the creation of this package:
 
