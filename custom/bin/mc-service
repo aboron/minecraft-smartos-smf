@@ -1,0 +1,40 @@
+#!/usr/bin/bash
+. /lib/svc/share/smf_include.sh
+
+getproparg() {
+        val=`svcprop -p ${1} ${SMF_FMRI}`
+        [ -n "$val" ] && echo $val
+}
+
+if [ -z ${SMF_FMRI} ]; then
+        echo "SMF framework variables are not initialized."
+        exit ${SMF_EXIT_ERR}
+fi
+
+JAVA_OPTS=`getproparg minecraft/java_opts`
+JAR_FILE=`getproparg minecraft/target_jar`
+
+
+if [ -z ${JAR_FILE} ]; then
+  echo "minecraft/target_jar property not set - using craftbukkit.jar"
+  JAR_FILE="craftbukkit.jar"
+fi
+
+case $1 in
+        'start')
+                echo "Started minecraft, command line: java ${JAVA_OPTS//\\} -jar ${JAR_FILE} nogui"
+                tmux new -d -s minecraft "java ${JAVA_OPTS//\\} -jar ${JAR_FILE} nogui"
+        ;;
+        'stop')
+                tmux send -t minecraft c-m "stop" c-m
+        ;;
+        'refresh')
+                tmux send -t minecraft c-m "reload" c-m
+        ;;
+        *)
+                echo "Usage: $0 { start | stop | refresh }"
+                exit 1
+        ;;
+esac
+
+exit ${SMF_EXIT_OK}

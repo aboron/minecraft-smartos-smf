@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE service_bundle SYSTEM "/usr/share/lib/xml/dtd/service_bundle.dtd.1">
+<service_bundle type="manifest" name="minecraft">
+
+    <service name="site/minecraft" type="service" version="1">
+
+        <create_default_instance enabled="true"/>
+        <single_instance/>
+
+        <dependency name="network" grouping="require_all" restart_on="error" type="service">
+            <service_fmri value="svc:/milestone/network:default"/>
+        </dependency>
+
+        <dependency name="filesystem" grouping="require_all" restart_on="error" type="service">
+            <service_fmri value="svc:/system/filesystem/local"/>
+        </dependency>
+
+        <method_context>
+            <method_credential user="minecrft" group="minecrft"/>
+            <method_environment>
+                <envvar name="PATH" value="/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin:/usr/local/bin" />
+            </method_environment>
+        </method_context>
+
+        <exec_method type="method" name="start" exec="mc-service start" timeout_seconds="60"/>
+        <exec_method type="method" name="stop" exec="mc-service stop" timeout_seconds="60"/>
+        <exec_method type="method" name="refresh" exec="mc-service refresh" timeout_seconds="60"/>
+
+        <property_group name="startd" type="framework">
+            <propval name="duration" type="astring" value="contract"/>
+        </property_group>
+
+        <property_group name="minecraft" type="application">
+            <propval name="java_opts" type="astring" value="-d64 -Xincgc -Xms1G -Xmx6G -Djava.security.egd=/dev/./urandom -XX:-UseVMInterruptibleIO -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=4 -XX:+AggressiveOpts"/>
+            <propval name="target_jar" type="astring" value="craftbukkit.jar"/>
+        </property_group>
+
+        <stability value="Evolving"/>
+        <template>
+            <common_name>
+                <loctext xml:lang="C">
+                    Minecraft service
+                </loctext>
+            </common_name>
+        </template>
+    </service>
+</service_bundle>

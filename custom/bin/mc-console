@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+sudo -u minecrft tmux attach -t minecraft
