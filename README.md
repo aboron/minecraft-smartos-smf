@@ -29,3 +29,7 @@ TODO:
 1. Put all the variables into svcprops and reference those from the mc-console and mc-service scripts.
 2. Write an update script.
 3. Write and installer script.
+
+Check my blog post on the creation of this package:
+
+http://greggaskill.us/2013/06/minecraft-on-smartos
