@@ -1,0 +1,10 @@
+minecraft-smartos-smf contains some minor shell scripts
+to make it simple to run a mincraft server in a zone
+
+The following tools are included:
+mc-update   update to latest jar file version
+mc-console  connect to running minecraft console
+mc-service  helper script for smf/svcs
+
+Homepage:
+https://github.com/aboron/minecraft-smartos-smf

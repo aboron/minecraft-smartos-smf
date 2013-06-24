@@ -1,0 +1,35 @@
+#!/usr/bin/bash
+
+getproparg() {
+        val=`svcprop -p ${1} minecraft`
+        [ -n "$val" ] && echo $val
+}
+
+JAR_FILE=`getproparg minecraft/target_jar`
+MC_SOURCE=`getproparg minecraft/source_jar`
+
+if [ -z ${JAR_FILE} ]; then
+  echo "minecraft/target_jar property not set - using craftbukkit.jar"
+  JAR_FILE="craftbukkit.jar"
+fi
+
+if [ -z ${MC_SOURCE} ]; then
+  echo "minecraft/mc_source property not set - using craftbukkit-rb"
+  MC_SOURCE="craftbukkit-rb"
+fi
+
+case ${MC_SOURCE} in
+        'minecraft')
+                wget "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar" -O /opt/local/minecraft/${JAR_FILE}
+        ;;
+        'craftbukkit-beta')
+                wget "http://dl.bukkit.org/latest-beta/craftbukkit-beta.jar" -O /opt/local/minecraft/${JAR_FILE}
+        ;;
+  'craftbukkit-rb')
+                wget "http://dl.bukkit.org/latest-rb/craftbukkit.jar" -O /opt/local/minecraft/${JAR_FILE}
+        ;;
+        *)
+                echo "Usage: $0"
+                exit 1
+        ;;
+esac

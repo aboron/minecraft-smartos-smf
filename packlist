@@ -1,0 +1,19 @@
+@pkgdep sun-jre6
+@pkgdep tmux
+@cwd /usr/local
+@exec mkdir minecraft
+@cwd /usr/local/minecraft
+@exec mkdir {bin,smf}
+@cwd /usr/local/minecraft/bin
+mc-service
+mc-console
+mc-update
+@exec chmod 755 *
+@cwd /usr/local/minecraft/smf
+minecraft.xml
+@exec groupadd minecrft
+@exec useradd -g minecrft minecrft
+@exec chown -R minecrft:minecrft /opt/local/minecraft
+@exec svccfg import /opt/local/smf/minecraft.xml
+@exec ln -s /opt/local/minecraft/bin/mc-console /opt/local/bin
+@exec ln -s /opt/local/minecraft/bin/mc-update /opt/local/bin
