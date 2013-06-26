@@ -1,3 +1,5 @@
+
+---------------------
 minecraft-smartos-smf
 ---------------------
 
@@ -20,9 +22,15 @@ craftbukkit-beta = gets the latest craftbukkit beta
 craftbukkit-rb = gets the latest craftbukkit recommended build *default
 
 ---------------------
+*********************
 
-After the values are set, run "mc-update" to download your server jar and then
-enable the server with "svcadm enable minecraft"
+After the values abouve are set (or left default), run "mc-update" to download
+the minecraft server jar from their source and then enable the server with
+"svcadm enable minecraft"
 
-Connect to the running server console using mc-console, 'Ctrl-b' then 'd' to
-leave the console without killing the server.
+Connect to the running server console using "mc-console".
+Use 'Ctrl-b' then 'd' to leave the console without killing the server.
+
+*********************
+---------------------
+
