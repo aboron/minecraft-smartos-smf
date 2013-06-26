@@ -8,5 +8,6 @@ custom/smf/minecraft.xml
 @exec useradd -g minecrft minecrft
 @exec chown -R minecrft:minecrft /opt/local/minecraft
 @exec svccfg import /opt/local/smf/minecraft.xml
-@exec ln -s /opt/local/minecraft/bin/mc-console /opt/local/bin
-@exec ln -s /opt/local/minecraft/bin/mc-update /opt/local/bin
+@exec ln -s /opt/local/minecraft/custom/bin/mc-service /opt/local/bin
+@exec ln -s /opt/local/minecraft/custom/bin/mc-console /opt/local/bin
+@exec ln -s /opt/local/minecraft/custom/bin/mc-update /opt/local/bin
