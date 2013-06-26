@@ -4,7 +4,7 @@
 
     <service name="site/minecraft" type="service" version="1">
 
-        <create_default_instance enabled="true"/>
+        <create_default_instance enabled="false"/>
         <single_instance/>
 
         <dependency name="network" grouping="require_all" restart_on="error" type="service">

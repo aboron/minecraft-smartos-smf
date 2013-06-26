@@ -3,7 +3,8 @@
 @cwd /opt/local
 @exec mkdir minecraft
 @cwd /opt/local/minecraft
-@exec mkdir {bin,smf}
+@exec mkdir bin
+@exec mkdir smf
 @cwd /opt/local/minecraft/bin
 mc-service
 mc-console
