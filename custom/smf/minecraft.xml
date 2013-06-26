@@ -31,8 +31,9 @@
         </property_group>
 
         <property_group name="minecraft" type="application">
-            <propval name="java_opts" type="astring" value="-d64 -Xincgc -Xms1G -Xmx6G -Djava.security.egd=/dev/./urandom -XX:-UseVMInterruptibleIO -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=4 -XX:+AggressiveOpts"/>
+            <propval name="java_opts" type="astring" value="-d64 -Xincgc -Xms512M -Xmx1536M -Djava.security.egd=/dev/./urandom -XX:-UseVMInterruptibleIO -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalPacing -XX:ParallelGCThreads=4 -XX:+AggressiveOpts"/>
             <propval name="target_jar" type="astring" value="craftbukkit.jar"/>
+            <propval name="source_jar" type="astring" value="craftbukkit-rb"/>
         </property_group>
 
         <stability value="Evolving"/>

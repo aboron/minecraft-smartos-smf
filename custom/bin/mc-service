@@ -38,3 +38,4 @@ case $1 in
 esac
 
 exit ${SMF_EXIT_OK}
+
