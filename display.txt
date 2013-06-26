@@ -25,8 +25,11 @@ craftbukkit-rb = gets the latest craftbukkit recommended build *default
 *********************
 
 After the values abouve are set (or left default), run "mc-update" to download
-the minecraft server jar from their source and then enable the server with
+the minecraft server jar from its source and then enable the server with
 "svcadm enable minecraft"
+
+If you edit the config files, or rerun "mc-update" to download a newer jar file,
+use "svcadm refresh minecraft" to do a graceful restart.
 
 Connect to the running server console using "mc-console".
 Use 'Ctrl-b' then 'd' to leave the console without killing the server.
