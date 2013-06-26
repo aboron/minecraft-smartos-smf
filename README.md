@@ -7,7 +7,7 @@ To use:
 
 	echo "http://www.ggxtech.net/packages/minecraft/x86_64/All" >> /opt/local/etc/pkgin/repositories.conf
 	pkgin -fy up
-	pkgin in minecraft-smartos-smf'
+	pkgin in minecraft-smartos-smf
 
 Enjoy!
 
