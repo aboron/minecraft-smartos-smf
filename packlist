@@ -1,17 +1,9 @@
 @pkgdep sun-jre6
 @pkgdep tmux
-@cwd /opt/local
-@exec mkdir minecraft
-@cwd /opt/local/minecraft
-@exec mkdir bin
-@exec mkdir smf
-@cwd /opt/local/minecraft/bin
-mc-service
-mc-console
-mc-update
-@exec chmod 755 *
-@cwd /opt/local/minecraft/smf
-minecraft.xml
+custom/bin/mc-console
+custom/bin/mc-service
+custom/bin/mc-update
+custom/smf/minecraft.xml
 @exec groupadd minecrft
 @exec useradd -g minecrft minecrft
 @exec chown -R minecrft:minecrft /opt/local/minecraft
