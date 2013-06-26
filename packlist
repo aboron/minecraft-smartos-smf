@@ -5,7 +5,7 @@ custom/bin/mc-service
 custom/bin/mc-update
 custom/smf/minecraft.xml
 @exec groupadd minecrft
-@exec useradd -d /opt/local/minecraft -s /bin/false -g minecrft minecrft
+@exec useradd -d /opt/local/minecraft -g minecrft minecrft
 @exec chown -R minecrft:minecrft /opt/local/minecraft
 @exec svccfg import /opt/local/minecraft/custom/smf/minecraft.xml
 @exec ln -s /opt/local/minecraft/custom/bin/mc-service /opt/local/bin
