@@ -5,32 +5,60 @@ getproparg() {
         [ -n "$val" ] && echo $val
 }
 
+setproparg() {
+        val=`svccfg -s minecraft setprop ${1} = astring: ${2}`
+        [ -n "$val" ] && echo $val
+}
+
 JAR_FILE=`getproparg minecraft/target_jar`
 MC_SOURCE=`getproparg minecraft/source_jar`
 
 if [ -z ${JAR_FILE} ]; then
-  echo "minecraft/target_jar property not set - using craftbukkit.jar"
-  JAR_FILE="craftbukkit.jar"
+  echo "minecraft/target_jar property not set - using minecraft.jar"
+  JAR_FILE="minecraft.jar"
+  echo "Setting service property minecraft/target_jar = minecraft.jar"
+  `setproparg minecraft/target_jar minecraft.jar`
 fi
 
 if [ -z ${MC_SOURCE} ]; then
-  echo "minecraft/mc_source property not set - using craftbukkit-rb"
-  MC_SOURCE="craftbukkit-rb"
+  if [ "$#" -eq 0 ]; then
+    echo "minecraft/mc_source property not set - using minecraft"
+    MC_SOURCE="minecraft"
+    echo "Setting service property minecraft/source_jar = minecraft"
+    `setproparg minecraft/source_jar minecraft`
+  fi
+
+  if [ "$#" -eq 1 ]; then
+    if [ "$1" = "--help" ]
+      MC_SOURCE="show-help"
+    else
+      echo "Setting service property minecraft/source_jar = user-provided"
+      'setproparg minecraft/source_jar user-provided'
+      echo "Setting service property minecraft/target_jar = minecraft.jar"
+      'setproparg minecraft/target_jar minecraft.jar'
+      echo "Downloading minecraft server from: $1"
+      MC_SOURCE="user-provided"
+    fi
+  fi
 fi
 
 case ${MC_SOURCE} in
-        'minecraft')
-                wget "https://s3.amazonaws.com/MinecraftDownload/launcher/minecraft_server.jar" -O /opt/local/minecraft/${JAR_FILE}
-        ;;
-        'craftbukkit-beta')
-                wget "http://dl.bukkit.org/latest-beta/craftbukkit-beta.jar" -O /opt/local/minecraft/${JAR_FILE}
-        ;;
+  'minecraft')
+    wget --no-check-certificate "https://s3.amazonaws.com/Minecraft.Download/versions/1.7.9/minecraft_server.1.7.9.jar" -O /opt/local/minecraft/${JAR_FILE}
+  ;;
+  'craftbukkit-beta')
+    wget --no-check-certificate "https://dl.bukkit.org/latest-beta/craftbukkit-beta.jar" -O /opt/local/minecraft/${JAR_FILE}
+  ;;
   'craftbukkit-rb')
-                wget "http://dl.bukkit.org/latest-rb/craftbukkit.jar" -O /opt/local/minecraft/${JAR_FILE}
-        ;;
-        *)
-                echo "Usage: $0"
-                exit 1
-        ;;
+    wget --no-check-certificate "https://dl.bukkit.org/latest-rb/craftbukkit.jar" -O /opt/local/minecraft/${JAR_FILE}
+  ;;
+  'user-provided')
+    wget --no-check-certificate "$1" -O /opt/local/minecraft/${JAR_FILE}
+  ;;
+  *)
+    echo "Usage: $0 [Optional Minecraft Server URL]"
+    echo "       $0 --help"
+    exit 1
+  ;;
 esac
 

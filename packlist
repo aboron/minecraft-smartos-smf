@@ -1,4 +1,5 @@
-@pkgdep sun-jre6
+@cwd /opt/local/minecraft
+@pkgdep openjdk7
 @pkgdep tmux
 custom/bin/mc-console
 custom/bin/mc-service
