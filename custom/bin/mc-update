@@ -29,7 +29,7 @@ if [ -z ${MC_SOURCE} ]; then
   fi
 
   if [ "$#" -eq 1 ]; then
-    if [ "$1" = "--help" ]
+    if [ "$1" = "--help" ]; then
       MC_SOURCE="show-help"
     else
       echo "Setting service property minecraft/source_jar = user-provided"
