@@ -5,11 +5,6 @@ getproparg() {
         [ -n "$val" ] && echo $val
 }
 
-setproparg() {
-        val=`svccfg -s minecraft setprop ${1} = astring: ${2}`
-        [ -n "$val" ] && echo $val
-}
-
 JAR_FILE=`getproparg minecraft/target_jar`
 MC_SOURCE=`getproparg minecraft/source_jar`
 
@@ -17,7 +12,8 @@ if [ -z ${JAR_FILE} ]; then
   echo "minecraft/target_jar property not set - using minecraft.jar"
   JAR_FILE="minecraft.jar"
   echo "Setting service property minecraft/target_jar = minecraft.jar"
-  `setproparg minecraft/target_jar minecraft.jar`
+  svccfg -s minecraft setprop minecraft/target_jar = astring: minecraft.jar
+  svccfg -s minecraft:default refresh
 fi
 
 if [ -z ${MC_SOURCE} ]; then
@@ -25,20 +21,23 @@ if [ -z ${MC_SOURCE} ]; then
     echo "minecraft/mc_source property not set - using minecraft"
     MC_SOURCE="minecraft"
     echo "Setting service property minecraft/source_jar = minecraft"
-    `setproparg minecraft/source_jar minecraft`
+    svccfg -s minecraft setprop minecraft/source_jar = astring: minecraft
+    svccfg -s minecraft:default refresh
   fi
+fi
 
-  if [ "$#" -eq 1 ]; then
-    if [ "$1" = "--help" ]; then
-      MC_SOURCE="show-help"
-    else
-      echo "Setting service property minecraft/source_jar = user-provided"
-      'setproparg minecraft/source_jar user-provided'
-      echo "Setting service property minecraft/target_jar = minecraft.jar"
-      'setproparg minecraft/target_jar minecraft.jar'
-      echo "Downloading minecraft server from: $1"
-      MC_SOURCE="user-provided"
-    fi
+if [ "$#" -eq 1 ]; then
+  if [ "$1" = "--help" ]; then
+    MC_SOURCE="show-help"
+  else
+    echo "Setting service property minecraft/source_jar = user-provided"
+    svccfg -s minecraft setprop minecraft/source_jar = astring: user-provided
+    echo "Setting service property minecraft/target_jar = minecraft.jar"
+    svccfg -s minecraft setprop minecraft/target_jar = astring: minecraft.jar
+    svccfg -s minecraft:default refresh
+    echo "Downloading minecraft server from: $1"
+    MC_SOURCE="user-provided"
+    JAR_FILE="minecraft.jar"
   fi
 fi
 
@@ -56,8 +55,10 @@ case ${MC_SOURCE} in
     wget --no-check-certificate "$1" -O /opt/local/minecraft/${JAR_FILE}
   ;;
   *)
+    echo ""
     echo "Usage: $0 [Optional Minecraft Server URL]"
     echo "       $0 --help"
+    echo ""
     exit 1
   ;;
 esac
