@@ -5,7 +5,7 @@ Minecraft server SMF manifest and service helper scripts for SmartOS (Solaris)
 
 To use:
 
-	echo "http://www.ggxtech.net/packages/minecraft/x86_64/All" >> /opt/local/etc/pkgin/repositories.conf
+	echo "http://ns1.ggxtech.net/packages/minecraft/x86_64/All" >> /opt/local/etc/pkgin/repositories.conf
 	pkgin -fy up
 	pkgin in minecraft-smartos-smf
 
